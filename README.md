@@ -9,7 +9,5 @@ Follow the instruction below:
 3. The data folder contains the sample data
 4. The query.php can be used to add the sample data to the database
 
-### Implementing the JWT Authentication
-5. Install the firebase php-jwt with composer require firebase/php-jwt
-
-api/authenticate : To generate an access token
+Here is an image illustrating the flow
+![OAuth2.0 Flow ](oauth.png)

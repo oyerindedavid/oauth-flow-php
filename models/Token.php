@@ -29,6 +29,27 @@ class Token{
         return $res;
     }
 
+    public function getAClientByToken($token) : array{
+        $sql = "SELECT * FROM tokens AS t
+                    INNER JOIN clients AS c
+                    ON t.client_id = c.id
+                    WHERE t.token = '$token' ";
+        $query = mysqli_query($this->con, $sql);
+
+        $row = mysqli_fetch_array($query);
+        if($row){
+            extract($row);
+            $res = [
+                    "id" => $id,
+                    "secrete"=> $secrete,
+                    "name"=> $name
+                ];
+        }else{
+            $res = ["status" => "No record", "message"=>"We could find a record that match your request"];
+        }
+        return $res;
+    }
+
     public function createtoken($business_id, $client_id, $token): bool{
         $sql = "INSERT INTO tokens (business_id, client_id, token) VALUES ('$business_id', '$client_id', '$token')";
         $query = mysqli_query($this->con, $sql);

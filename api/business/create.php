@@ -19,9 +19,11 @@ $business = new Business($conn);
 $data = json_decode(file_get_contents("php://input"));
 
 $name = cleanData($conn, $data->name);
+$email = cleanData($conn, $data->email);
+$password = cleanData($conn, $data->password);
 
 try{
-    $business->createBusiness(name: $name);
+    $business->createBusiness(name: $name, email:$email, password:$password);
 
     $response['status'] = 'Success';
     $response['message'] = 'Business account created';

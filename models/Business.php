@@ -25,6 +25,26 @@ class Business{
         return $res;
     }
 
+    public function isExistBusinessAccount($email, $password) : array{
+        $sql = "SELECT * FROM business WHERE email = '$email' AND password = '$password' ";
+        $query = mysqli_query($this->con, $sql);
+        $row = mysqli_fetch_array($query);
+        
+        
+
+        $count = mysqli_num_rows($query);
+        if($count > 0){
+            $data['is_exist'] = true;
+            extract($row);
+            $data['info'] = ["id" => $id,"name"=> $name];
+        }else{
+            $data['is_exist'] = false;
+            $data['is_info'] = "No record found";
+        }
+
+        return $data;
+    }
+
     public function getAllBusiness() : array{
         $sql = "SELECT * FROM business";
         $query = mysqli_query($this->con, $sql);
@@ -42,10 +62,10 @@ class Business{
         return $result;
     }
 
-    public function createbusiness($name): bool{
+    public function createBusiness($name, $email, $password): bool{
         $business_id = md5($name);
 
-        $sql = "INSERT INTO business (id, name) VALUES ('$business_id', '$name')";
+        $sql = "INSERT INTO business (id, name) VALUES ('$business_id', '$name', '$email', '$password')";
         $query = mysqli_query($this->con, $sql);
 
         if($query){
